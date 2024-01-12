@@ -248,14 +248,22 @@ fn coerced_from<'a>(
         Int32 if matches!(type_from, Null | Int8 | Int16 | Int32 | UInt8 | UInt16) => {
             Some(type_into.clone())
         }
-        Int64
+        Int64 
             if matches!(
                 type_from,
-                Null | Int8 | Int16 | Int32 | Int64 | UInt8 | UInt16 | UInt32
+                Null | Int8 | Int16 | Int32 | Int64 | UInt8 | UInt16 | UInt32 | UInt64
             ) =>
         {
             Some(type_into.clone())
         }
+        Int64 if matches!(
+                type_from,
+                UInt64
+            ) =>
+        {
+            Some(Float64)
+        }
+        
         UInt8 if matches!(type_from, Null | UInt8) => Some(type_into.clone()),
         UInt16 if matches!(type_from, Null | UInt8 | UInt16) => Some(type_into.clone()),
         UInt32 if matches!(type_from, Null | UInt8 | UInt16 | UInt32) => {
