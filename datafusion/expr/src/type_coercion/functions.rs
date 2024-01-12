@@ -298,6 +298,7 @@ fn coerced_from<'a>(
         {
             Some(type_into.clone())
         }
+        // coalesce() supports all datatypes issue#8790
         Decimal128(_, _)
             if matches!(
                 type_from,
