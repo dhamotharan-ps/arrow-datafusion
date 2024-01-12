@@ -298,6 +298,24 @@ fn coerced_from<'a>(
         {
             Some(type_into.clone())
         }
+        Decimal128(_, _)
+            if matches!(
+                type_from,
+                Null | Int8
+                    | Int16
+                    | Int32
+                    | Int64
+                    | UInt8
+                    | UInt16
+                    | UInt32
+                    | UInt64
+                    | Float32
+                    | Float64
+                    | Decimal128(_, _)
+            ) =>
+        {
+            Some(type_into.clone())
+        }
         Timestamp(TimeUnit::Nanosecond, None)
             if matches!(
                 type_from,

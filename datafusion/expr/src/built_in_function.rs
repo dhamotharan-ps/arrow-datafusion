@@ -28,7 +28,7 @@ use crate::signature::TIMEZONE_WILDCARD;
 use crate::type_coercion::binary::get_wider_type;
 use crate::type_coercion::functions::data_types;
 use crate::{
-    conditional_expressions, FuncMonotonicity, Signature, TypeSignature, Volatility,
+    FuncMonotonicity, Signature, TypeSignature, Volatility,
 };
 
 use arrow::datatypes::{DataType, Field, Fields, IntervalUnit, TimeUnit};
@@ -993,8 +993,8 @@ impl BuiltinScalarFunction {
             | BuiltinScalarFunction::ConcatWithSeparator => {
                 Signature::variadic(vec![Utf8], self.volatility())
             }
-            BuiltinScalarFunction::Coalesce => Signature::variadic(
-                conditional_expressions::SUPPORTED_COALESCE_TYPES.to_vec(),
+            // coalesce() supports all datatypes issue#8790
+            BuiltinScalarFunction::Coalesce => Signature::variadic_equal(
                 self.volatility(),
             ),
             BuiltinScalarFunction::SHA224
